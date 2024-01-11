@@ -22,11 +22,14 @@ export const Table = styled.table`
 `;
 
 export const FirstColumn = styled.th`
-  width: 55%;
+  width: 45%;
 `;
 
 export const SecondColumn = styled.th`
-  width: 25%;
+  width: 20%;
+`;
+export const ThirdColumn = styled.th`
+  width: 20%;
 `;
 
 export const ActionsColumn = styled.td`
