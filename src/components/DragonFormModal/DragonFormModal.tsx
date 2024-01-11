@@ -1,7 +1,7 @@
 // src/components/DragonFormModal/DragonFormModal.tsx
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { FormContainer, CloseButton, AddButton, SelectInput } from "./styles";
+import { FormContainer, CloseButton, SelectInput } from "./styles";
 
 interface DragonFormModalProps {
   isOpen: boolean;

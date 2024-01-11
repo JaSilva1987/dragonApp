@@ -11,18 +11,20 @@ import {
   AddButton,
 } from "./styles";
 import DragonFormModal from "../DragonFormModal/DragonFormModal";
+import DragonDetailsModal from "../DragonDetailsModal/DragonDetailsModal";
 
-interface Dragon {
+export interface Dragon {
   id: string;
   name: string;
   type: string;
-  createdAt: string; // Adicionado o campo createdAt
-  histories: string[]; // Modificado o campo histories para um array
+  createdAt: string;
+  histories: string[];
 }
 
 const DragonListPage: React.FC = () => {
   const [dragons, setDragons] = useState<Dragon[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
 
   useEffect(() => {
     const fetchDragons = async () => {
@@ -64,7 +66,7 @@ const DragonListPage: React.FC = () => {
           name,
           type,
           histories,
-          createdAt: new Date().toISOString(), // Adicionando a data de criação atual
+          createdAt: new Date().toISOString(),
         }
       );
       setDragons((prevDragons) => [...prevDragons, response.data]);
@@ -98,6 +100,9 @@ const DragonListPage: React.FC = () => {
               <td>{dragon.type}</td>
               <td>{new Date(dragon.createdAt).toLocaleString()}</td>
               <ActionsColumn>
+                <button onClick={() => setSelectedDragon(dragon)}>
+                  Detalhes
+                </button>
                 <button onClick={() => handleRemoveDragon(dragon.id)}>
                   Remove
                 </button>
@@ -107,6 +112,12 @@ const DragonListPage: React.FC = () => {
         </tbody>
       </ResponsiveTable>
       <AddButton onClick={() => setIsModalOpen(true)}>Add Dragon</AddButton>
+
+      <DragonDetailsModal
+        isOpen={!!selectedDragon}
+        dragon={selectedDragon}
+        onClose={() => setSelectedDragon(null)}
+      />
     </Container>
   );
 };

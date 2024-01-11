@@ -1,57 +1,48 @@
 import React from "react";
 import Modal from "react-modal";
-import { FormContainer, CloseButton } from "../DragonFormModal/styles";
+import { Dragon } from "../DragonListPage/DragonListPage";
+import { modalStyle } from "./styles";
 
 interface DragonDetailsModalProps {
   isOpen: boolean;
+  dragon: Dragon | null;
   onClose: () => void;
-  dragon: {
-    name: string;
-    type: string;
-    createdAt: string;
-    histories: string[];
-  } | null;
 }
 
 const DragonDetailsModal: React.FC<DragonDetailsModalProps> = ({
   isOpen,
-  onClose,
   dragon,
+  onClose,
 }) => {
   if (!dragon) {
     return null;
   }
 
+  const histories = Array.isArray(dragon.histories) ? dragon.histories : [];
+
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onClose}
-      contentLabel="Dragon Details"
-      overlayClassName="Overlay"
-      className="Modal"
+      style={{
+        content: modalStyle.content,
+      }}
     >
-      <FormContainer>
-        <CloseButton onClick={onClose}>&times;</CloseButton>
-        <h2>Dragon Details</h2>
-        <p>
-          <strong>Name:</strong> {dragon.name}
-        </p>
-        <p>
-          <strong>Type:</strong> {dragon.type}
-        </p>
-        <p>
-          <strong>Data de Criação:</strong>{" "}
-          {new Date(dragon.createdAt).toLocaleString()}
-        </p>
-        <p>
-          <strong>Histories:</strong>
-        </p>
-        <ul>
-          {dragon.histories.map((history, index) => (
-            <li key={index}>{history}</li>
-          ))}
-        </ul>
-      </FormContainer>
+      <div>
+        <button onClick={onClose} style={{ float: "right" }}>
+          Fechar
+        </button>
+        <h3>Detalhes do Dragão</h3>
+        <p>Name: {dragon.name}</p>
+        <p>Type: {dragon.type}</p>
+        <p>Data de Criação: {new Date(dragon.createdAt).toLocaleString()}</p>
+        <h4>Histórico:</h4>
+        {histories.length > 0 ? (
+          histories.map((history, index) => <p key={index}>{history}</p>)
+        ) : (
+          <p>Sem histórico disponível.</p>
+        )}
+      </div>
     </Modal>
   );
 };
