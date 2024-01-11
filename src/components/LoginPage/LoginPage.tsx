@@ -9,7 +9,8 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = () => {
     if (username === "admin" && password === "Pass@2024") {
-      navigate("/dashboard");
+      console.log("Login bem-sucedido");
+      navigate("/dragons");
     } else {
       console.log("Login falhou");
     }

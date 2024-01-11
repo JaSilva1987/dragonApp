@@ -1,4 +1,3 @@
-// src/components/LoginPage/styles.ts
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -14,6 +13,11 @@ export const LoginForm = styled.div`
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  width: 300px;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
 
   h2 {
     margin-bottom: 20px;
