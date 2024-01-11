@@ -1,8 +1,14 @@
-// src/components/DragonList/DragonList.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Table, ActionsColumn, AddButton } from "./styles";
+import {
+  Container,
+  ResponsiveTable,
+  FirstColumn,
+  SecondColumn,
+  ActionsColumn,
+  AddButton,
+} from "./styles";
 
 interface Dragon {
   id: string;
@@ -10,7 +16,7 @@ interface Dragon {
   type: string;
 }
 
-const DragonList: React.FC = () => {
+const DragonListPage: React.FC = () => {
   const [dragons, setDragons] = useState<Dragon[]>([]);
 
   useEffect(() => {
@@ -42,13 +48,16 @@ const DragonList: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container>
       <h2>Dragon List</h2>
-      <Table>
+      <AddButton>
+        <Link to="/dragons/new">Add Dragon</Link>
+      </AddButton>
+      <ResponsiveTable>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Type</th>
+            <FirstColumn>Name</FirstColumn>
+            <SecondColumn>Type</SecondColumn>
             <th>Actions</th>
           </tr>
         </thead>
@@ -67,12 +76,9 @@ const DragonList: React.FC = () => {
             </tr>
           ))}
         </tbody>
-      </Table>
-      <Link to="/dragons/new">
-        <AddButton>Add Dragon</AddButton>
-      </Link>
-    </div>
+      </ResponsiveTable>
+    </Container>
   );
 };
 
-export default DragonList;
+export default DragonListPage;
