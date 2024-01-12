@@ -12,6 +12,7 @@ import {
 } from "./styles";
 import DragonFormModal from "../DragonFormModal/DragonFormModal";
 import DragonDetailsModal from "../DragonDetailsModal/DragonDetailsModal";
+import DragonUpdateModal from "../DragonUpdateModal/DragonUpdateModal";
 
 export interface Dragon {
   id: string;
@@ -25,6 +26,8 @@ const DragonListPage: React.FC = () => {
   const [dragons, setDragons] = useState<Dragon[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
+
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchDragons = async () => {
@@ -76,6 +79,11 @@ const DragonListPage: React.FC = () => {
     }
   };
 
+  const handleOpenUpdateModal = (dragon: Dragon) => {
+    setSelectedDragon(dragon);
+    setIsUpdateModalOpen(true);
+  };
+
   return (
     <Container>
       <h2>Dragon List</h2>
@@ -103,6 +111,9 @@ const DragonListPage: React.FC = () => {
                 <button onClick={() => setSelectedDragon(dragon)}>
                   Detalhes
                 </button>
+                <button onClick={() => handleOpenUpdateModal(dragon)}>
+                  Atualizar
+                </button>
                 <button onClick={() => handleRemoveDragon(dragon.id)}>
                   Remove
                 </button>
@@ -118,6 +129,20 @@ const DragonListPage: React.FC = () => {
         dragon={selectedDragon}
         onClose={() => setSelectedDragon(null)}
       />
+
+      {selectedDragon && (
+        <DragonUpdateModal
+          isOpen={isUpdateModalOpen}
+          dragon={selectedDragon}
+          onClose={() => {
+            setIsUpdateModalOpen(false);
+            setSelectedDragon(null);
+          }}
+          onUpdate={function (updatedDragon: Dragon): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      )}
     </Container>
   );
 };
