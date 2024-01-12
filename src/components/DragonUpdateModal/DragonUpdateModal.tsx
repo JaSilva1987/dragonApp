@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/components/DragonUpdateModal/DragonUpdateModal.tsx
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import { Dragon } from "../DragonListPage/DragonListPage";
@@ -17,8 +18,17 @@ const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
   onClose,
   onUpdate,
 }) => {
-  const [updatedName, setUpdatedName] = useState(dragon?.name || "");
-  const [updatedType, setUpdatedType] = useState(dragon?.type || "");
+  const [updatedName, setUpdatedName] = useState("");
+  const [updatedType, setUpdatedType] = useState("");
+  const [updatedHistories, setUpdatedHistories] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (dragon) {
+      setUpdatedName(dragon.name);
+      setUpdatedType(dragon.type);
+      setUpdatedHistories(dragon.histories || []);
+    }
+  }, [dragon]);
 
   const handleUpdate = async () => {
     try {
@@ -27,10 +37,11 @@ const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
         {
           name: updatedName,
           type: updatedType,
+          histories: updatedHistories,
         }
       );
       onUpdate(response.data);
-      onClose();
+      onClose(); // Fechar o modal após a atualização
     } catch (error) {
       console.error("Error updating dragon:", error);
     }
@@ -61,6 +72,7 @@ const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
             onChange={(e) => setUpdatedName(e.target.value)}
           />
         </label>
+        <br />
         <label>
           Type:
           <input
@@ -69,6 +81,17 @@ const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
             onChange={(e) => setUpdatedType(e.target.value)}
           />
         </label>
+        <br />
+        <label>
+          Histórico:
+          <textarea
+            value={
+              Array.isArray(updatedHistories) ? updatedHistories.join("\n") : ""
+            }
+            onChange={(e) => setUpdatedHistories(e.target.value.split("\n"))}
+          />
+        </label>
+        <br />
         <button onClick={handleUpdate}>Atualizar</button>
         <button onClick={onClose}>Fechar</button>
       </UpdateModalContent>

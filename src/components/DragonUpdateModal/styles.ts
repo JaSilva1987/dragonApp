@@ -21,6 +21,13 @@ export const UpdateModalContent = styled.div`
     margin-bottom: 1rem;
   }
 
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
   button {
     background-color: #4caf50;
     color: white;
