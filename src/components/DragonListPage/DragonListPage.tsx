@@ -21,7 +21,11 @@ export interface Dragon {
   histories: string[];
 }
 
-const DragonListPage: React.FC = () => {
+interface DragonListPageProps {
+  onLogout: () => void;
+}
+
+const DragonListPage: React.FC<DragonListPageProps> = ({ onLogout }) => {
   const [dragons, setDragons] = useState<Dragon[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDragon, setSelectedDragon] = useState<Dragon | null>(null);
