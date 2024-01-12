@@ -1,4 +1,3 @@
-// src/components/DragonFormModal/DragonFormModal.tsx
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { FormContainer, CloseButton, SelectInput } from "./styles";
@@ -6,7 +5,7 @@ import { FormContainer, CloseButton, SelectInput } from "./styles";
 interface DragonFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (name: string, type: string, histories: string[]) => void; // Modificado a assinatura da função onSave
+  onSave: (name: string, type: string, histories: string[]) => void;
 }
 
 const DragonFormModal: React.FC<DragonFormModalProps> = ({
@@ -20,7 +19,6 @@ const DragonFormModal: React.FC<DragonFormModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      // Limpar os campos quando o modal é aberto
       setName("");
       setType("");
       setHistories([]);
@@ -59,7 +57,6 @@ const DragonFormModal: React.FC<DragonFormModalProps> = ({
               <option value="Fire">Fire</option>
               <option value="Ice">Ice</option>
               <option value="Water">Water</option>
-              {/* Adicione mais opções conforme necessário */}
             </SelectInput>
           </label>
           <label>

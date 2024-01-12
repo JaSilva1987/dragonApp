@@ -9,6 +9,7 @@ export const UpdateModalContent = styled.div`
   }
 
   label {
+    text-align: left;
     display: block;
     margin-bottom: 0.5rem;
     font-size: 1rem;
@@ -43,4 +44,11 @@ export const UpdateModalContent = styled.div`
     background-color: #f44336;
     margin-right: 0;
   }
+`;
+
+export const SelectInput = styled.select`
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
 `;

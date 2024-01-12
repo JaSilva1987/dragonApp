@@ -1,4 +1,3 @@
-// src/components/DragonListPage/DragonListPage.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -84,6 +83,24 @@ const DragonListPage: React.FC = () => {
     setIsUpdateModalOpen(true);
   };
 
+  const handleUpdateDragon = async (updatedDragon: Dragon) => {
+    try {
+      await axios.put(
+        `http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon/${updatedDragon.id}`,
+        updatedDragon
+      );
+      setDragons((prevDragons) =>
+        prevDragons.map((dragon) =>
+          dragon.id === updatedDragon.id ? updatedDragon : dragon
+        )
+      );
+      setIsUpdateModalOpen(false);
+      setSelectedDragon(null);
+    } catch (error) {
+      console.error("Error updating dragon:", error);
+    }
+  };
+
   return (
     <Container>
       <h2>Dragon List</h2>
@@ -138,9 +155,7 @@ const DragonListPage: React.FC = () => {
             setIsUpdateModalOpen(false);
             setSelectedDragon(null);
           }}
-          onUpdate={function (updatedDragon: Dragon): void {
-            throw new Error("Function not implemented.");
-          }}
+          onUpdate={handleUpdateDragon}
         />
       )}
     </Container>

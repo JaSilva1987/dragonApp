@@ -1,15 +1,14 @@
-// src/components/DragonUpdateModal/DragonUpdateModal.tsx
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import { Dragon } from "../DragonListPage/DragonListPage";
-import { UpdateModalContent } from "./styles";
+import { SelectInput, UpdateModalContent } from "./styles";
 
 interface DragonUpdateModalProps {
   isOpen: boolean;
   dragon: Dragon | null;
   onClose: () => void;
-  onUpdate: (updatedDragon: Dragon) => void;
+  onUpdate: (updatedDragon: Dragon) => Promise<void>;
 }
 
 const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
@@ -40,8 +39,8 @@ const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
           histories: updatedHistories,
         }
       );
-      onUpdate(response.data);
-      onClose(); // Fechar o modal após a atualização
+      await onUpdate(response.data);
+      onClose();
     } catch (error) {
       console.error("Error updating dragon:", error);
     }
@@ -75,11 +74,15 @@ const DragonUpdateModal: React.FC<DragonUpdateModalProps> = ({
         <br />
         <label>
           Type:
-          <input
-            type="text"
+          <SelectInput
             value={updatedType}
             onChange={(e) => setUpdatedType(e.target.value)}
-          />
+          >
+            <option value="">Select Type</option>
+            <option value="Fire">Fire</option>
+            <option value="Ice">Ice</option>
+            <option value="Water">Water</option>
+          </SelectInput>
         </label>
         <br />
         <label>
